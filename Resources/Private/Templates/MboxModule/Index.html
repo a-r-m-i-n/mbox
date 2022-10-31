@@ -1,0 +1,35 @@
+<f:layout name="Backend" />
+
+<f:section name="content">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Recipient(s)</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Size</th>
+                <th>A</th>
+            </tr>
+        </thead>
+        <tbody>
+            <f:for each="{mailbox.allMessages}" as="mail">
+                <tr>
+                    <td>{mail.from}</td>
+                    <td>{mail.to}</td>
+                    <td>
+                        <f:link.action action="show" arguments="{messageId: mail.messageId}" class="text-primary"><strong>{mail.subject}</strong></f:link.action>
+                    </td>
+                    <td>{mail.date -> f:format.date(format: 'd.m.Y H:i:s')}</td>
+                    <td>{mail.size -> f:format.bytes()}</td>
+                    <td>
+                        <f:if condition="{mail.attachments -> f:count()} > 0">
+                            <img src="{f:uri.resource(path: 'Icons/paperclip-solid.svg')}" alt="This mail got attachments" style="max-height: 1rem; max-width: 1rem;" />
+                        </f:if>
+                    </td>
+                </tr>
+            </f:for>
+        </tbody>
+    </table>
+
+</f:section>

@@ -1,0 +1,25 @@
+body {
+    background: #ededed;
+}
+
+.mail-header-info {
+    padding: 0.5rem;
+}
+
+.mail-header-info table td {
+    vertical-align: top;
+}
+
+.html-mail, .text-mail {
+    background: #fff;
+    min-height: 350px;
+    padding: 1rem;
+    border-left: 1px solid #d7d7d7;
+    border-right: 1px solid #d7d7d7;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.text-mail {
+    font-family: "Courier New";
+    white-space: pre;
+}

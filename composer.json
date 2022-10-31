@@ -1,0 +1,36 @@
+{
+    "name": "t3/mbox",
+    "description": "TYPO3 CMS backend module to view mbox file contents, like an email client.",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Armin Vieweg",
+            "email": "armin@v.ieweg.de",
+            "homepage": "https://v.ieweg.de"
+        }
+    ],
+    "keywords": [
+        "typo3",
+        "mbox",
+        "email",
+        "mail",
+        "viewer",
+        "mail viewer"
+    ],
+    "require": {
+        "php": ">=7.3",
+        "typo3/cms-core": "^10.4 || ^11.5",
+        "armin/mbox-parser": "*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "T3\\Mbox\\": "Classes"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "mbox"
+        }
+    }
+}
