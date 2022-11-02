@@ -1,6 +1,27 @@
 <f:layout name="Backend" />
 
 <f:section name="content">
+
+    <div id="mbox-header" class="d-flex justify-content-between">
+        <div class="d-flex">
+            <img src="{f:uri.resource(path: 'Icons/Extension.svg')}" height="32" width="32" class="me-2">
+            <h1>mbox Client</h1>
+        </div>
+        <div class="text-end pe-2">
+            <div>
+                <strong class="me-2">Mbox file path:</strong><code class="m-0 p-0">{mboxPath}</code>
+            </div>
+            <div>{mailbox -> f:count()} mails found</div>
+        </div>
+    </div>
+
+    <f:if condition="!{transportIsMbox}">
+        <div class="alert alert-danger">
+            <div><strong>Caution!</strong></div>
+            Mbox is not configured as mail transport in TYPO3. Instead "{transport}" is enabled.
+        </div>
+    </f:if>
+
     <table class="table">
         <thead>
             <tr>
@@ -13,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            <f:for each="{mailbox.allMessages}" as="mail">
+            <f:for each="{mailbox}" as="mail">
                 <tr>
                     <td>{mail.from}</td>
                     <td>{mail.to}</td>
@@ -21,10 +42,10 @@
                         <f:link.action action="show" arguments="{messageId: mail.messageId}" class="text-primary"><strong>{mail.subject}</strong></f:link.action>
                     </td>
                     <td>{mail.date -> f:format.date(format: 'd.m.Y H:i:s')}</td>
-                    <td>{mail.size -> f:format.bytes()}</td>
+                    <td class="text-nowrap">{mail.size -> f:format.bytes()}</td>
                     <td>
                         <f:if condition="{mail.attachments -> f:count()} > 0">
-                            <img src="{f:uri.resource(path: 'Icons/paperclip-solid.svg')}" alt="This mail got attachments" style="max-height: 1rem; max-width: 1rem;" />
+                            <img src="{f:uri.resource(path: 'Icons/paperclip-solid.svg')}" alt="This mail got attachments" style="height: 1rem; width: 1rem;" />
                         </f:if>
                     </td>
                 </tr>

@@ -23,3 +23,7 @@ body {
     font-family: "Courier New";
     white-space: pre;
 }
+
+#mbox-header h1 {
+    color: #333;
+}

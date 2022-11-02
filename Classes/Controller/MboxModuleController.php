@@ -2,14 +2,14 @@
 
 namespace T3\Mbox\Controller;
 
+use Armin\MboxParser\Mailbox;
 use Armin\MboxParser\Parser;
-use Armin\MboxParser\Result;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class MboxModuleController extends ActionController
 {
     /**
-     * @var Result|null
+     * @var Mailbox|null
      */
     private $mailbox = null;
 
@@ -23,6 +23,10 @@ class MboxModuleController extends ActionController
 
     public function indexAction()
     {
+        $this->view->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === 'mbox');
+        $this->view->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
+        $this->view->assign('mboxPath', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
+
         $this->view->assign('mailbox', $this->mailbox);
     }
 
