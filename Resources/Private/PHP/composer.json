@@ -1,0 +1,10 @@
+{
+    "config": {
+        "platform": {
+            "php": "7.3.0"
+        }
+    },
+    "require": {
+        "armin/mbox-parser": "^1.0"
+    }
+}
