@@ -19,7 +19,7 @@ class CreateAndSendTestMailsCommand extends Command
 
         $io->title('Create and send test mails');
 
-        $io->progressStart(3);
+        $io->progressStart(4);
 
         $simpleMail = GeneralUtility::makeInstance(MailMessage::class);
         $simpleMail
@@ -65,6 +65,24 @@ class CreateAndSendTestMailsCommand extends Command
             ->send()
         ;
         $io->progressAdvance();
+
+
+        $mailWithBinaryAttachment = GeneralUtility::makeInstance(MailMessage::class);
+        $mailWithBinaryAttachment
+            ->priority(Email::PRIORITY_HIGHEST)
+            ->from('sender@domain.com')
+            ->to(new Address('recipient@domain.com', 'Robert Recipient'))
+            ->subject('Test Mail #4')
+            ->text('This is the text body of the mail, which also contains an binary attachment')
+            ->embedFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-inbox.png'), 'inline-test-image')
+            ->html('This is the <strong>HTML body</strong> of the mail, which also contains an binary attachment and an inline image: <img src="cid:inline-test-image" alt="Inline Image" />')
+            ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-detail-html-view.png'), 'mbox-detail-html-view.png', 'image/png')
+            ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-detail-with-attachments.png'), 'mbox-detail-with-attachments.png', 'image/png')
+            ->send()
+        ;
+
+        $io->progressAdvance();
+
 
         $io->progressFinish();
 
