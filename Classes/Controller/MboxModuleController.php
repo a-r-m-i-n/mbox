@@ -81,4 +81,11 @@ class MboxModuleController extends ActionController
 
         throw new \RuntimeException(sprintf('No attachment with filename "%s" found in mail message with id "%s"', $fileName, $messageId));
     }
+
+    public function clearMboxAction(): void
+    {
+        file_put_contents($GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file'], '');
+
+        $this->redirect('index');
+    }
 }

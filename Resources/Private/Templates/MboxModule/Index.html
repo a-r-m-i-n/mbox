@@ -2,10 +2,16 @@
 
 <f:section name="content">
 
-    <div id="mbox-header" class="d-flex justify-content-between">
-        <div class="d-flex">
+    <div id="mbox-header" class="d-flex justify-content-between mb-3">
+        <div class="d-flex align-items-center">
             <img src="{f:uri.resource(path: 'Icons/Extension.svg')}" height="32" width="32" class="me-2">
-            <h1>mbox Client</h1>
+            <h1 class="m-0">mbox Client</h1>
+
+            <f:link.action class="btn btn-success btn-sm ms-4">Refresh</f:link.action>
+            <f:if condition="{mailbox -> f:count()} > 0">
+                <f:link.action action="clearMbox" class="btn btn-warning btn-sm ms-2" id="action-clear-all-mails">Clear all mails</f:link.action>
+                <f:asset.script identifier="ext-mbox-backend-js-clear-all-mails-confirmation" src="EXT:mbox/Resources/Public/Js/ClearMailsConfirmation.js" />
+            </f:if>
         </div>
         <div class="text-end pe-2">
             <div>

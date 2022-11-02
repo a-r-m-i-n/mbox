@@ -6,7 +6,7 @@
     'mboxModule',
     '',
     [
-        \T3\Mbox\Controller\MboxModuleController::class => 'index,show,downloadEml,downloadAttachment',
+        \T3\Mbox\Controller\MboxModuleController::class => 'index,show,downloadEml,downloadAttachment,clearMbox',
     ],
     [
         'access' => 'user,group',
