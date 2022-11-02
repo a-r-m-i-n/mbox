@@ -3,7 +3,7 @@ body {
 }
 
 .mail-header-info {
-    padding: 0.5rem;
+    padding: 0 .5rem 1rem;
 }
 
 .mail-header-info table td {
@@ -26,4 +26,26 @@ body {
 
 #mbox-header h1 {
     color: #333;
+}
+
+#mbox-toolbar {
+    padding: .5rem 1rem;
+    background: #AAA;
+    border-bottom: 1px solid #888;
+}
+
+.attachments {
+    margin-bottom: 1rem;
+}
+.attachment {
+    text-decoration: none !important;
+    border: 1px solid #999;
+    margin-right: 0.5rem;
+    padding: .25rem 1rem .25rem .5rem;
+    opacity: .8;
+    cursor: pointer;
+    min-width: 190px;
+}
+.attachment:hover {
+    opacity: 1;
 }

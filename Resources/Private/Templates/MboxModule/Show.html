@@ -1,73 +1,114 @@
-<f:layout name="Backend" />
+<f:layout name="Backend"/>
+
+<f:section name="toolbar">
+    <div id="mbox-toolbar">
+        <f:link.action action="index" class="btn btn-default btn-sm">
+            Return to overview
+        </f:link.action>
+
+        <f:link.action action="downloadEml" arguments="{messageId: mail.messageId}" class="btn btn-default btn-sm">
+            Download EML file
+        </f:link.action>
+    </div>
+</f:section>
 
 <f:section name="content">
     <div class="mail-header-info">
-        <table>
-            <tr>
-                <td class="text-end pe-2">From</td>
-                <td>
-                    <f:if condition="{mail.fromName}">
-                        "{mail.fromName}" -
-                    </f:if>
-                    {mail.from}</td>
-            </tr>
-            <tr>
-                <td class="text-end pe-2">Subject</td>
-                <td><strong>{mail.subject}</strong></td>
-            </tr>
+        <div class="d-flex justify-content-between align-items-end">
+            <table>
+                <tr>
+                    <td class="text-end pe-2">From</td>
+                    <td>
+                        <f:if condition="{mail.fromName}">
+                            "{mail.fromName}" -
+                        </f:if>
+                        {mail.from}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-end pe-2">Subject</td>
+                    <td><strong>{mail.subject}</strong></td>
+                </tr>
 
-            <f:if condition="{mail.to -> f:count()} > 0">
-                <tr>
-                    <td class="text-end pe-2">To</td>
-                    <td>
-                        <ul class="list-unstyled">
-                            <f:for each="{mail.to}" as="address">
-                                <li>{address}</li>
-                            </f:for>
-                        </ul>
-                    </td>
-                </tr>
-            </f:if>
-            <f:if condition="{mail.cc -> f:count()} > 0">
-                <tr>
-                    <td class="text-end pe-2">CC</td>
-                    <td>
-                        <ul class="list-unstyled">
-                            <f:for each="{mail.cc}" as="address">
-                                <li>{address}</li>
-                            </f:for>
-                        </ul>
-                    </td>
-                </tr>
-            </f:if>
-            <f:if condition="{mail.bcc -> f:count()} > 0">
-                <tr>
-                    <td class="text-end pe-2">BCC</td>
-                    <td>
-                        <ul class="list-unstyled">
-                            <f:for each="{mail.bcc}" as="address">
-                                <li>{address}</li>
-                            </f:for>
-                        </ul>
-                    </td>
-                </tr>
-            </f:if>
-        </table>
+                <f:if condition="{mail.to -> f:count()} > 0">
+                    <tr>
+                        <td class="text-end pe-2">To</td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <f:for each="{mail.to}" as="address">
+                                    <li>{address}</li>
+                                </f:for>
+                            </ul>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{mail.cc -> f:count()} > 0">
+                    <tr>
+                        <td class="text-end pe-2">CC</td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <f:for each="{mail.cc}" as="address">
+                                    <li>{address}</li>
+                                </f:for>
+                            </ul>
+                        </td>
+                    </tr>
+                </f:if>
+                <f:if condition="{mail.bcc -> f:count()} > 0">
+                    <tr>
+                        <td class="text-end pe-2">BCC</td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <f:for each="{mail.bcc}" as="address">
+                                    <li>{address}</li>
+                                </f:for>
+                            </ul>
+                        </td>
+                    </tr>
+                </f:if>
+            </table>
+            <div class="text-end">
+                {mail.date -> f:format.date(format:'d.m.Y H:i:s')}
+            </div>
+        </div>
     </div>
+
+    <f:if condition="{mail.attachments -> f:count()} > 0">
+        <div class="attachments d-flex">
+            <f:for each="{mail.attachments}" as="attachment">
+                <f:link.action action="downloadAttachment" arguments="{messageId: mail.messageId, fileName: attachment.filename}" class="attachment align-items-center d-flex">
+                    <div class="me-2">
+                        <img src="{f:uri.resource(path: 'Icons/paperclip-solid.svg')}" alt="{attachment.filename}" style="height: 1.5rem; width: 1.5rem;" />
+                    </div>
+                    <div>
+                        <strong>{attachment.filename}</strong><br>
+                        {attachment.contentSize -> f:format.bytes()}
+                    </div>
+                </f:link.action>
+            </f:for>
+        </div>
+    </f:if>
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="html-tab" data-bs-toggle="tab" data-bs-target="#html-tab-pane" type="button" role="tab" aria-controls="html-tab-pane" aria-selected="true">HTML</button>
+            <button class="nav-link active" id="html-tab" data-bs-toggle="tab" data-bs-target="#html-tab-pane"
+                    type="button" role="tab" aria-controls="html-tab-pane" aria-selected="true">HTML
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="text-tab" data-bs-toggle="tab" data-bs-target="#text-tab-pane" type="button" role="tab" aria-controls="text-tab-pane" aria-selected="false">Text</button>
+            <button class="nav-link" id="text-tab" data-bs-toggle="tab" data-bs-target="#text-tab-pane" type="button"
+                    role="tab" aria-controls="text-tab-pane" aria-selected="false">Text
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="source-tab" data-bs-toggle="tab" data-bs-target="#source-tab-pane" type="button" role="tab" aria-controls="source-tab-pane" aria-selected="false">Source</button>
+            <button class="nav-link" id="source-tab" data-bs-toggle="tab" data-bs-target="#source-tab-pane"
+                    type="button" role="tab" aria-controls="source-tab-pane" aria-selected="false">Source
+            </button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="html-tab-pane" role="tabpanel" aria-labelledby="html-tab" tabindex="0">
+        <div class="tab-pane fade show active" id="html-tab-pane" role="tabpanel" aria-labelledby="html-tab"
+             tabindex="0">
             <div class="html-mail">
                 {mail.html -> f:format.raw()}
             </div>
