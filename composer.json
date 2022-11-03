@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "typo3/cms-core": "^10.4 || ^11.5",
+        "typo3/cms-core": "^11.5 || ^12.0",
         "armin/mbox-parser": "^1.0"
     },
     "autoload": {
