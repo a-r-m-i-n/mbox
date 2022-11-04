@@ -5,3 +5,4 @@ services:
     public: false
 
   T3\Mbox\Controller\MboxModuleController: ~
+  T3\Mbox\ViewHelpers\ParseHtmlViewHelper: ~

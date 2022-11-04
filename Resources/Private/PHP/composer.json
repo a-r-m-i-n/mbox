@@ -5,6 +5,6 @@
         }
     },
     "require": {
-        "armin/mbox-parser": "^1.0"
+        "armin/mbox-parser": "^1.0.2"
     }
 }

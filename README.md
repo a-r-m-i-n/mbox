@@ -73,13 +73,6 @@ Don't forget to clear all caches from install tool, after enabling the debug mod
 The command got the name ``mbox:testmails:send`` and will send four test mails (with/without attachments).
 
 
-## Missing features
-
-- Display of inline images in HTML view
-- Backend module not translated (English existing only)
-- Utilize Caching Framework
-
-
 ## Links
 
 - [Git Repository](https://github.com/a-r-m-i-n/mbox)
