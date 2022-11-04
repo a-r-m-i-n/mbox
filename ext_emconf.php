@@ -5,9 +5,10 @@ $EM_CONF[$_EXTKEY] = array(
     'description' => 'TYPO3 CMS backend module to view mbox file contents, like an email client.',
     'category' => 'backend',
     'author' => 'Armin Vieweg',
-    'author_email' => 'vieweg@iwkoeln.de',
-    'version' => '1.0.0-dev',
-    'state' => 'alpha',
+    'author_email' => 'armin@v.ieweg.de',
+    'author_company' => 'IW Medien GmbH | www.iwmedien.de',
+    'version' => '1.0.0',
+    'state' => 'stable',
     'constraints' => [
         'depends' =>
             [
