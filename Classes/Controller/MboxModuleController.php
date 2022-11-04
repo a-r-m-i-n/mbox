@@ -4,47 +4,88 @@ namespace T3\Mbox\Controller;
 
 use Armin\MboxParser\Mailbox;
 use Armin\MboxParser\Parser;
-use TYPO3\CMS\Core\Http\ImmediateResponseException;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3Fluid\Fluid\View\ViewInterface;
 
 class MboxModuleController extends ActionController
 {
+    private ModuleTemplateFactory $moduleTemplateFactory;
+    private ModuleTemplate $moduleTemplate;
+
     /**
      * @var Mailbox|null
      */
     private $mailbox = null;
 
+    public function __construct(ModuleTemplateFactory $moduleTemplateFactory)
+    {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+    }
 
     public function initializeAction()
     {
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $this->moduleTemplate->setTitle('EXT:mbox');
+        $this->moduleTemplate->getDocHeaderComponent()->disable();
+
         $mboxParser = new Parser();
         $this->mailbox = $mboxParser->parse($GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
     }
 
-
-    public function indexAction()
+    /**
+     * v12 returns ModuleTemplate, v11 ViewInterface
+     *
+     * @return ModuleTemplate|ViewInterface
+     */
+    private function getViewToUse()
     {
-        $this->view->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === 'mbox');
-        $this->view->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
-        $this->view->assign('mboxPath', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
+        if (method_exists($this->moduleTemplate, 'assign')) {
+            return $this->moduleTemplate;
+        }
+       return $this->view;
+    }
 
-        $this->view->assign('mailbox', $this->mailbox);
+    private function renderViewToUse(): ResponseInterface
+    {
+        if (!$this->getViewToUse() instanceof ModuleTemplate) {
+            // v11
+            $this->moduleTemplate->setContent($this->getViewToUse()->render());
+            return $this->htmlResponse($this->moduleTemplate->renderContent());
+        }
+
+        return $this->htmlResponse($this->getViewToUse()->render());
+    }
+
+    public function indexAction(): ResponseInterface
+    {
+        $this->getViewToUse()->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === 'mbox');
+        $this->getViewToUse()->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
+        $this->getViewToUse()->assign('mboxPath', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
+
+        $this->getViewToUse()->assign('mailbox', $this->mailbox);
+
+        return $this->renderViewToUse();
     }
 
 
-    public function showAction(string $messageId)
+    public function showAction(string $messageId): ResponseInterface
     {
         $mail = $this->mailbox->getMessageById($messageId);
         if (!$mail) {
             throw new \InvalidArgumentException('No message with ID "' . $messageId . '" found!');
         }
 
-        $this->view->assign('mail', $mail);
+        $this->getViewToUse()->assign('mail', $mail);
+
+        return $this->renderViewToUse();
     }
 
 
-    public function downloadEmlAction(string $messageId)
+    public function downloadEmlAction(string $messageId): ResponseInterface
     {
         $mail = $this->mailbox->getMessageById($messageId);
         if (!$mail) {
@@ -56,11 +97,11 @@ class MboxModuleController extends ActionController
         $response = $response->withHeader('Content-Type', 'application/octet-stream');
         $response = $response->withHeader('Content-Disposition', 'attachment;filename=' . $mail->getMessageId() . '.eml');
 
-        throw new ImmediateResponseException($response);
+        return $response;
     }
 
 
-    public function downloadAttachmentAction(string $messageId, string $fileName)
+    public function downloadAttachmentAction(string $messageId, string $fileName): ResponseInterface
     {
         $mail = $this->mailbox->getMessageById($messageId);
         if (!$mail) {
@@ -75,17 +116,18 @@ class MboxModuleController extends ActionController
                 $response = $response->withHeader('Content-Type', $attachment->getContentMimeType());
                 $response = $response->withHeader('Content-Disposition', 'attachment;filename=' . $attachment->getFilename());
 
-                throw new ImmediateResponseException($response);
+                return $response;
             }
         }
 
         throw new \RuntimeException(sprintf('No attachment with filename "%s" found in mail message with id "%s"', $fileName, $messageId));
     }
 
-    public function clearMboxAction(): void
+
+    public function clearMboxAction(): ResponseInterface
     {
         file_put_contents($GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file'], '');
 
-        $this->redirect('index');
+        return $this->redirect('index');
     }
 }

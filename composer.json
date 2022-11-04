@@ -19,7 +19,7 @@
         "mail viewer"
     ],
     "require": {
-        "php": ">=7.3",
+        "php": "^7.4 || ^8.0",
         "typo3/cms-core": "^11.5 || ^12.0",
         "armin/mbox-parser": "^1.0"
     },

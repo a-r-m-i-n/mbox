@@ -33,8 +33,9 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 
 ## Requirements
 
-- TYPO3 10.4 or 11.5
-- PHP >=7.3
+- TYPO3 11.5 LTS or 12
+- PHP >=7.4
+
 
 ## Installation
 
@@ -77,7 +78,6 @@ The command got the name ``mbox:testmails:send`` and will send four test mails (
 - Display of inline images in HTML view
 - Backend module not translated (English existing only)
 - Utilize Caching Framework
-
 
 
 ## Links

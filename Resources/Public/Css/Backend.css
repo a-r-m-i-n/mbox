@@ -2,6 +2,13 @@ body {
     background: #ededed;
 }
 
+.module {
+    background: transparent;
+}
+.module-body {
+    padding: 0;
+}
+
 .mail-header-info {
     padding: 0 .5rem 1rem;
 }
