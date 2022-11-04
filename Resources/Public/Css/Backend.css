@@ -1,5 +1,6 @@
 body {
     background: #ededed;
+    overflow: auto;
 }
 
 .module {
@@ -55,4 +56,15 @@ body {
 }
 .attachment:hover {
     opacity: 1;
+}
+
+.credits {
+    opacity: 0.7;
+    font-size: .7rem;
+}
+.credits a {
+    text-decoration: underline;
+}
+.credits a:hover {
+    text-decoration: none;
 }
