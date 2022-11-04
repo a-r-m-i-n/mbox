@@ -7,6 +7,7 @@ use Armin\MboxParser\Parser;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3Fluid\Fluid\View\ViewInterface;
@@ -60,13 +61,23 @@ class MboxModuleController extends ActionController
         return $this->htmlResponse($this->getViewToUse()->render());
     }
 
-    public function indexAction(): ResponseInterface
+    public function indexAction(?bool $reverse = null): ResponseInterface
     {
         $this->getViewToUse()->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === 'mbox');
         $this->getViewToUse()->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
         $this->getViewToUse()->assign('mboxPath', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
 
         $this->getViewToUse()->assign('mailbox', $this->mailbox);
+
+        /** @var BackendUserAuthentication $beUser */
+        $beUser = $GLOBALS['BE_USER'];
+        if (null === $reverse) {
+            $reverse = (bool)$beUser->getSessionData('mbox-index-reverse');
+        } else {
+            $beUser->setSessionData('mbox-index-reverse', $reverse);
+        }
+
+        $this->getViewToUse()->assign('reverse', $reverse);
 
         return $this->renderViewToUse();
     }

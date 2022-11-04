@@ -10,6 +10,28 @@ body {
     padding: 0;
 }
 
+a.sort-reversed,
+a.sort-regular {
+    text-decoration: none;
+}
+a.sort-reversed:hover span,
+a.sort-regular:hover span {
+    text-decoration: underline;
+}
+
+a.sort-regular:after,
+a.sort-reversed:after {
+    margin-left: .25rem;
+    font-size: .7rem;
+}
+
+a.sort-regular:after {
+    content: "▲";
+}
+a.sort-reversed:after {
+    content: "▼";
+}
+
 .mail-header-info {
     padding: 0 .5rem 1rem;
 }

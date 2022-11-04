@@ -25,6 +25,7 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 ## Features
 
 - Simple web mail client for emails stored in local mbox file
+- Sort mails by date (asc/desc) and store choice in BE-User session
 - HTML and text viewer
 - Download attachments separately
 - Download whole mail message as EML file (e.g. for Microsoft Outlook)
@@ -74,7 +75,6 @@ The command got the name ``mbox:testmails:send`` and will send four test mails (
 
 ## Missing features
 
-- Allow mails to get sorted (at least by date asc/desc)
 - Display of inline images in HTML view
 - Backend module not translated (English existing only)
 - Utilize Caching Framework

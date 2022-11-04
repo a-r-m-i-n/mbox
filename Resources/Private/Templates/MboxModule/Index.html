@@ -34,13 +34,17 @@
                 <th>Sender</th>
                 <th>Recipient(s)</th>
                 <th>Subject</th>
-                <th>Date</th>
+                <f:variable name="reverseParam">1</f:variable>
+                <f:if condition="{reverse}">
+                    <f:variable name="reverseParam">0</f:variable>
+                </f:if>
+                <th><f:link.action arguments="{reverse:reverseParam}" class="{f:if(condition:'{reverse}', then:'sort-reversed', else:'sort-regular')}" title="Click to reverse the sorting of displayed mails"><span>Date</span></f:link.action></th>
                 <th>Size</th>
                 <th>A</th>
             </tr>
         </thead>
         <tbody>
-            <f:for each="{mailbox}" as="mail">
+            <f:for each="{mailbox}" as="mail" reverse="{reverse}">
                 <tr>
                     <td>{mail.from}</td>
                     <td>{mail.to}</td>
