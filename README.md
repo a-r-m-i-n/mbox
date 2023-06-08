@@ -72,6 +72,24 @@ Don't forget to clear all caches from install tool, after enabling the debug mod
 
 The command got the name ``mbox:testmails:send`` and will send four test mails (with/without attachments).
 
+## Dev Environment
+
+The extension repository provides a DDEV environment to develop on EXT:mbox locally in TYPO3 11 and 12. 
+You find more information [here](https://github.com/a-r-m-i-n/ddev-for-typo3-extensions).
+
+### Minimum instructions
+
+```bash
+ddev start
+ddev composer self-update
+ddev install-all
+```
+
+* Overview: https://mbox.ddev.site/
+* TYPO3 11 Backend: https://v11.mbox.ddev.site/typo3/
+* TYPO3 12 Backend: https://v12.mbox.ddev.site/typo3/
+* Username: `admin`
+* Password: `Password:joh316` (also in install tool)
 
 ## Links
 

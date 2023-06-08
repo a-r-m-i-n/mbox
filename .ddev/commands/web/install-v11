@@ -3,6 +3,7 @@
 VERSION=v11
 
 rm -rf /var/www/html/$VERSION/*
+mkdir -p /var/www/html/$VERSION/
 echo "{}" > /var/www/html/$VERSION/composer.json
 composer config extra.typo3/cms.web-dir public -d /var/www/html/$VERSION
 composer config repositories.$EXTENSION_KEY path ../../$EXTENSION_KEY -d /var/www/html/$VERSION
@@ -22,7 +23,6 @@ vendor/bin/typo3cms configuration:set 'SYS/displayErrors' 1
 vendor/bin/typo3cms configuration:set 'SYS/trustedHostsPattern' '.*.*'
 vendor/bin/typo3cms configuration:set 'MAIL/transport' 'mbox'
 vendor/bin/typo3cms configuration:set 'MAIL/transport_mbox_file' '/var/www/mbox/mails.mbox'
-vendor/bin/typo3cms configuration:set 'MAIL/transport_smtp_server' 'localhost:1025'
 vendor/bin/typo3cms configuration:set 'GFX/processor' 'ImageMagick'
 vendor/bin/typo3cms configuration:set 'GFX/processor_path' '/usr/bin/'
 vendor/bin/typo3cms configuration:set 'GFX/processor_path_lzw' '/usr/bin/'
