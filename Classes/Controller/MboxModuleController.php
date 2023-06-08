@@ -5,10 +5,15 @@ namespace T3\Mbox\Controller;
 use Armin\MboxParser\Mailbox;
 use Armin\MboxParser\Parser;
 use Psr\Http\Message\ResponseInterface;
+use T3\Mbox\MboxTransport;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\Response;
+use TYPO3\CMS\Core\Mail\Mailer;
+use TYPO3\CMS\Core\Mail\MailerInterface;
+use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3Fluid\Fluid\View\ViewInterface;
 
@@ -33,8 +38,12 @@ class MboxModuleController extends ActionController
         $this->moduleTemplate->setTitle('EXT:mbox');
         $this->moduleTemplate->getDocHeaderComponent()->disable();
 
-        $mboxParser = new Parser();
-        $this->mailbox = $mboxParser->parse($GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']) &&
+            file_exists($GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']))
+        {
+            $mboxParser = new Parser();
+            $this->mailbox = $mboxParser->parse($GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
+        }
     }
 
     /**
@@ -63,7 +72,7 @@ class MboxModuleController extends ActionController
 
     public function indexAction(?bool $reverse = null): ResponseInterface
     {
-        $this->getViewToUse()->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === 'mbox');
+        $this->getViewToUse()->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === MboxTransport::class);
         $this->getViewToUse()->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
         $this->getViewToUse()->assign('mboxPath', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
 

@@ -20,7 +20,7 @@ vendor/bin/typo3 configuration:set 'FE/debug' 1
 vendor/bin/typo3 configuration:set 'SYS/devIPmask' '*'
 vendor/bin/typo3 configuration:set 'SYS/displayErrors' 1
 vendor/bin/typo3 configuration:set 'SYS/trustedHostsPattern' '.*.*'
-vendor/bin/typo3 configuration:set 'MAIL/transport' 'mbox'
+vendor/bin/typo3 configuration:set 'MAIL/transport' 'T3\Mbox\MboxTransport'
 vendor/bin/typo3 configuration:set 'MAIL/transport_mbox_file' '/var/www/mbox/mails.mbox'
 vendor/bin/typo3 configuration:set 'GFX/processor' 'ImageMagick'
 vendor/bin/typo3 configuration:set 'GFX/processor_path' '/usr/bin/'

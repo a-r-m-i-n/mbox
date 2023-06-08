@@ -19,7 +19,7 @@ class CreateAndSendTestMailsCommand extends Command
 
         $io->title('Create and send test mails');
 
-        $io->progressStart(4);
+        $io->progressStart(6);
 
         $simpleMail = GeneralUtility::makeInstance(MailMessage::class);
         $simpleMail
@@ -67,12 +67,40 @@ class CreateAndSendTestMailsCommand extends Command
         $io->progressAdvance();
 
 
+        $simpleMailPlainTextOnly = GeneralUtility::makeInstance(MailMessage::class);
+        $simpleMailPlainTextOnly
+            ->from('sender@domain.com')
+            ->to(new Address('recipient@domain.com', 'Robert Recipient'), 'recipient1@domain.com', 'recipient2@domain.com')
+            ->cc('cc@domain.com')
+            ->bcc('bcc@domain.com')
+            ->replyTo('replyTo@domain.com')
+            ->subject('Test Mail #4 (Plaintext only)')
+            ->text('This is the text body of the mail')
+            ->send()
+        ;
+        $io->progressAdvance();
+
+
+        $simpleMailHtmlOnly = GeneralUtility::makeInstance(MailMessage::class);
+        $simpleMailHtmlOnly
+            ->from('sender@domain.com')
+            ->to(new Address('recipient@domain.com', 'Robert Recipient'), 'recipient1@domain.com', 'recipient2@domain.com')
+            ->cc('cc@domain.com')
+            ->bcc('bcc@domain.com')
+            ->replyTo('replyTo@domain.com')
+            ->subject('Test Mail #5 (HTML only)')
+            ->html('This is the <strong>HTML body</strong> of the mail')
+            ->send()
+        ;
+        $io->progressAdvance();
+
+
         $mailWithBinaryAttachment = GeneralUtility::makeInstance(MailMessage::class);
         $mailWithBinaryAttachment
             ->priority(Email::PRIORITY_HIGHEST)
             ->from('sender@domain.com')
             ->to(new Address('recipient@domain.com', 'Robert Recipient'))
-            ->subject('Test Mail #4')
+            ->subject('Test Mail #6')
             ->text('This is the text body of the mail, which also contains an binary attachment')
             ->embedFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-inbox.png'), 'inline-test-image')
             ->html('This is the <strong>HTML body</strong> of the mail, which also contains an binary attachment and an inline image: <img src="cid:inline-test-image" alt="Inline Image" />')

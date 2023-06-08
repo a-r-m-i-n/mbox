@@ -22,47 +22,60 @@
     </div>
 
     <f:if condition="!{transportIsMbox}">
-        <div class="alert alert-danger">
-            <div><strong>Caution!</strong></div>
-            Mbox is not configured as mail transport in TYPO3. Instead "{transport}" is enabled.
+        <div class="card">
+            <div class="card-header bg-danger text-white py-2"><strong>Wrong mail transport set</strong></div>
+            <div class="card-body">
+                <p class="my-0">"T3\Mbox\MboxTransport" is not configured as mail transport in TYPO3. Instead "{transport}" is set.</p>
+                <p class="my-0">Please set <code class="fs-5">$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']</code> to <code class="fw-bold fs-5">T3\Mbox\MboxTransport</code></p>
+            </div>
+        </div>
+    </f:if>
+    <f:if condition="!{mboxPath} || !{mailbox.md5hash}">
+        <div class="card">
+            <div class="card-header bg-danger text-white py-2"><strong>Wrong mbox path given</strong></div>
+            <div class="card-body">
+                <p class="my-0">The configured mbox path "<code class="fs-5">{mboxPath}</code>" is not existing!</p>
+                <p class="my-0">Please create this file.</p>
+            </div>
         </div>
     </f:if>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Sender</th>
-                <th>Recipient(s)</th>
-                <th>Subject</th>
-                <f:variable name="reverseParam">1</f:variable>
-                <f:if condition="{reverse}">
-                    <f:variable name="reverseParam">0</f:variable>
-                </f:if>
-                <th><f:link.action arguments="{reverse:reverseParam}" class="{f:if(condition:'{reverse}', then:'sort-reversed', else:'sort-regular')}" title="Click to reverse the sorting of displayed mails"><span>Date</span></f:link.action></th>
-                <th>Size</th>
-                <th>A</th>
-            </tr>
-        </thead>
-        <tbody>
-            <f:for each="{mailbox}" as="mail" reverse="{reverse}">
+    <f:if condition="{mailbox.md5hash}">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{mail.from}</td>
-                    <td>{mail.to}</td>
-                    <td>
-                        <f:link.action action="show" arguments="{messageId: mail.messageId}" class="text-primary"><strong>{mail.subject}</strong></f:link.action>
-                    </td>
-                    <td>{mail.date -> f:format.date(format: 'd.m.Y H:i:s')}</td>
-                    <td class="text-nowrap">{mail.size -> f:format.bytes()}</td>
-                    <td>
-                        <f:if condition="{mail.attachments -> f:count()} > 0">
-                            <img src="{f:uri.resource(path: 'Icons/paperclip-solid.svg')}" alt="This mail got attachments" style="height: 1rem; width: 1rem;" />
-                        </f:if>
-                    </td>
+                    <th>Sender</th>
+                    <th>Recipient(s)</th>
+                    <th>Subject</th>
+                    <f:variable name="reverseParam">1</f:variable>
+                    <f:if condition="{reverse}">
+                        <f:variable name="reverseParam">0</f:variable>
+                    </f:if>
+                    <th><f:link.action arguments="{reverse:reverseParam}" class="{f:if(condition:'{reverse}', then:'sort-reversed', else:'sort-regular')}" title="Click to reverse the sorting of displayed mails"><span>Date</span></f:link.action></th>
+                    <th>Size</th>
+                    <th>A</th>
                 </tr>
-            </f:for>
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                <f:for each="{mailbox}" as="mail" reverse="{reverse}">
+                    <tr>
+                        <td>{mail.from}</td>
+                        <td>{mail.to}</td>
+                        <td>
+                            <f:link.action action="show" arguments="{messageId: mail.messageId}" class="text-primary"><strong>{mail.subject}</strong></f:link.action>
+                        </td>
+                        <td>{mail.date -> f:format.date(format: 'd.m.Y H:i:s')}</td>
+                        <td class="text-nowrap">{mail.size -> f:format.bytes()}</td>
+                        <td>
+                            <f:if condition="{mail.attachments -> f:count()} > 0">
+                                <img src="{f:uri.resource(path: 'Icons/paperclip-solid.svg')}" alt="This mail got attachments" style="height: 1rem; width: 1rem;" />
+                            </f:if>
+                        </td>
+                    </tr>
+                </f:for>
+            </tbody>
+        </table>
+    </f:if>
     <f:render partial="Credits" />
 
 </f:section>

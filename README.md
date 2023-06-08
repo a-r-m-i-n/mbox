@@ -30,6 +30,7 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 - Download attachments separately
 - Download whole mail message as EML file (e.g. for Microsoft Outlook)
 - Clear mbox (delete all mails) action
+- Provides RFC 4155 compliant mbox mail transport (`T3\Mbox\MboxTransport`)
 
 
 ## Requirements
@@ -57,7 +58,7 @@ To make EXT:mbox work you need to configure the TYPO3 mail configuration to use 
 ```php
 <?php
 
-$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] = 'mbox';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] = 'T3\Mbox\MboxTransport';
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file'] = '/var/www/html/path/to/mbox-file.mbox';
 ```
 

@@ -6,3 +6,4 @@ services:
 
   T3\Mbox\Controller\MboxModuleController: ~
   T3\Mbox\ViewHelpers\ParseHtmlViewHelper: ~
+  T3\Mbox\XClass\MboxTransport: ~
