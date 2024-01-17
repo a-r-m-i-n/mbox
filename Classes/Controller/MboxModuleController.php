@@ -9,10 +9,10 @@ use T3\Mbox\MboxTransport;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Http\Response;
-use TYPO3\CMS\Core\Mail\Mailer;
-use TYPO3\CMS\Core\Mail\MailerInterface;
-use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3Fluid\Fluid\View\ViewInterface;
@@ -70,7 +70,7 @@ class MboxModuleController extends ActionController
         return $this->htmlResponse($this->getViewToUse()->render());
     }
 
-    public function indexAction(?bool $reverse = null): ResponseInterface
+    public function indexAction(int $currentPage = 1, ?bool $reverse = null): ResponseInterface
     {
         $this->getViewToUse()->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === MboxTransport::class);
         $this->getViewToUse()->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
@@ -78,6 +78,7 @@ class MboxModuleController extends ActionController
 
         $this->getViewToUse()->assign('mailbox', $this->mailbox);
 
+        // Reverse setting
         /** @var BackendUserAuthentication $beUser */
         $beUser = $GLOBALS['BE_USER'];
         if (null === $reverse) {
@@ -85,8 +86,26 @@ class MboxModuleController extends ActionController
         } else {
             $beUser->setSessionData('mbox-index-reverse', $reverse);
         }
-
         $this->getViewToUse()->assign('reverse', $reverse);
+
+        // Get mails as array
+        $mails = $this->mailbox->toArray();
+        if ($reverse) {
+            $mails = array_reverse($mails);
+        }
+
+        // Pagination
+        /** @var array<string, mixed> $extensionConfiguration */
+        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mbox');
+        $mailsPerPage = !empty($extensionConfiguration['mailsPerPage']) ? ((int) $extensionConfiguration['mailsPerPage']) : 10;
+
+        /** @var ArrayPaginator $paginator */
+        $paginator = GeneralUtility::makeInstance(ArrayPaginator::class, $mails, $currentPage, $mailsPerPage);
+        /** @var SimplePagination $pagination */
+        $pagination = GeneralUtility::makeInstance(SimplePagination::class, $paginator);
+
+        $this->getViewToUse()->assign('paginator', $paginator);
+        $this->getViewToUse()->assign('pagination', $pagination);
 
         return $this->renderViewToUse();
     }

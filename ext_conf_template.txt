@@ -1,2 +1,5 @@
 # cat=Basic; type=boolean; label=Enable Debug Mode: When enabled a Symfony Command becomes available to send some test mails
 debugMode = 0
+
+# cat=Basic; type=int; label=Mails per page: Defines how much mails should get displayed per page
+mailsPerPage = 10

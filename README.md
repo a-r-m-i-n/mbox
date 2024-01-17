@@ -26,6 +26,7 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 
 - Simple web mail client for emails stored in local mbox file
 - Sort mails by date (asc/desc) and store choice in BE-User session
+- Configurable pagination
 - HTML and text viewer
 - Download attachments separately
 - Download whole mail message as EML file (e.g. for Microsoft Outlook)
@@ -64,7 +65,16 @@ $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file'] = '/var/www/html/path
 
 If you have different transport configured, the backend module will display an error notice.
 
-### Debug setting
+
+## Extension Settings
+
+In extension settings (under Admin Tools > Settings > Extension Configuration) you have two options:
+
+### Mails per page
+
+The amount of mails being displayed per page. Default: 10
+
+### Debug mode
 
 For debugging and testing purposes, there is a Symfony command shipped, which becomes only available,
 when you enable the debug mode in Extension configuration. 
@@ -82,7 +92,6 @@ You find more information [here](https://github.com/a-r-m-i-n/ddev-for-typo3-ext
 
 ```bash
 ddev start
-ddev composer self-update
 ddev install-all
 ```
 

@@ -57,7 +57,7 @@
                 </tr>
             </thead>
             <tbody>
-                <f:for each="{mailbox}" as="mail" reverse="{reverse}">
+                <f:for each="{paginator.paginatedItems}" as="mail">
                     <tr>
                         <td>{mail.from}</td>
                         <td>{mail.to}</td>
@@ -75,6 +75,7 @@
                 </f:for>
             </tbody>
         </table>
+        <f:render partial="Pagination" arguments="{pagination: pagination, paginator: paginator}" />
     </f:if>
     <f:render partial="Credits" />
 
