@@ -112,3 +112,7 @@ a.sort-reversed:after {
     border-color: #333333;
     text-decoration: none;
 }
+
+.text-white {
+    color: #fff !important;
+}

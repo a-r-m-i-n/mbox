@@ -32,10 +32,10 @@
     </f:if>
     <f:if condition="!{mboxPath} || !{mailbox.md5hash}">
         <div class="card">
-            <div class="card-header bg-danger text-white py-2"><strong>Wrong mbox path given</strong></div>
+            <div class="card-header bg-danger text-white py-2"><strong>Wrong mbox path given or file not found</strong></div>
             <div class="card-body">
                 <p class="my-0">The configured mbox path "<code class="fs-5">{mboxPath}</code>" is not existing!</p>
-                <p class="my-0">Please create this file.</p>
+                <p class="my-0">Please create this file or check if the configured path is correct.</p>
             </div>
         </div>
     </f:if>

@@ -64,23 +64,25 @@ class MboxModuleController extends ActionController
         $this->moduleTemplate->assign('reverse', $reverse);
 
         // Get mails as array
-        $mails = $this->mailbox->toArray();
-        if ($reverse) {
-            $mails = array_reverse($mails);
+        if ($this->mailbox) {
+            $mails = $this->mailbox->toArray();
+            if ($reverse) {
+                $mails = array_reverse($mails);
+            }
+
+            // Pagination
+            /** @var array<string, mixed> $extensionConfiguration */
+            $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mbox');
+            $mailsPerPage = !empty($extensionConfiguration['mailsPerPage']) ? ((int) $extensionConfiguration['mailsPerPage']) : 10;
+
+            /** @var ArrayPaginator $paginator */
+            $paginator = GeneralUtility::makeInstance(ArrayPaginator::class, $mails, $currentPage, $mailsPerPage);
+            /** @var SimplePagination $pagination */
+            $pagination = GeneralUtility::makeInstance(SimplePagination::class, $paginator);
+
+            $this->moduleTemplate->assign('paginator', $paginator);
+            $this->moduleTemplate->assign('pagination', $pagination);
         }
-
-        // Pagination
-        /** @var array<string, mixed> $extensionConfiguration */
-        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mbox');
-        $mailsPerPage = !empty($extensionConfiguration['mailsPerPage']) ? ((int) $extensionConfiguration['mailsPerPage']) : 10;
-
-        /** @var ArrayPaginator $paginator */
-        $paginator = GeneralUtility::makeInstance(ArrayPaginator::class, $mails, $currentPage, $mailsPerPage);
-        /** @var SimplePagination $pagination */
-        $pagination = GeneralUtility::makeInstance(SimplePagination::class, $paginator);
-
-        $this->moduleTemplate->assign('paginator', $paginator);
-        $this->moduleTemplate->assign('pagination', $pagination);
 
         return $this->moduleTemplate->renderResponse('MboxModule/Index');
     }
