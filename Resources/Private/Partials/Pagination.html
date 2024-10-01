@@ -1,12 +1,12 @@
 <f:if condition="{pagination.allPageNumbers -> f:count()} > 1">
-    <ul class="paginator">
+    <ul class="paginator clearfix">
         <f:for each="{pagination.allPageNumbers}" as="page">
             <f:if condition="{page} == {paginator.currentPageNumber}">
                 <f:then>
-                    <li class="current"><span>{page}</span></li>
+                    <li class="float-start current"><span>{page}</span></li>
                 </f:then>
                 <f:else>
-                    <li>
+                    <li class="float-start">
                         <a href="{f:uri.action(arguments:{currentPage: page}, addQueryString:1)}">{page}</a>
                     </li>
                 </f:else>
