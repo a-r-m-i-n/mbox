@@ -54,7 +54,7 @@ class MboxTransport extends AbstractTransport
 
         $from = $message->getOriginalMessage()->getFrom();
         $mboxFromLine = sprintf("From %s %s\n", reset($from)->getAddress(), date('D M j H:i:s Y'));
-        $mboxEmail = $mboxFromLine . $emailAsString . PHP_EOL . PHP_EOL;
+        $mboxEmail = $mboxFromLine . trim($emailAsString) . PHP_EOL . PHP_EOL;
         // Creating "From " line end
 
         @fwrite($file, $mboxEmail);
