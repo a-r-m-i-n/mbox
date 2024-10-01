@@ -21,10 +21,7 @@ class MboxModuleController extends ActionController
     private ModuleTemplateFactory $moduleTemplateFactory;
     private ModuleTemplate $moduleTemplate;
 
-    /**
-     * @var Mailbox|null
-     */
-    private $mailbox = null;
+    private ?Mailbox $mailbox = null;
 
     public function __construct(ModuleTemplateFactory $moduleTemplateFactory)
     {
