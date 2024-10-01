@@ -36,8 +36,8 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 
 ## Requirements
 
-- TYPO3 11.5 LTS or 12
-- PHP >=7.4
+- TYPO3 12.4 LTS or 13.x
+- PHP >=8.2
 
 
 ## Installation
@@ -96,8 +96,8 @@ ddev install-all
 ```
 
 * Overview: https://mbox.ddev.site/
-* TYPO3 11 Backend: https://v11.mbox.ddev.site/typo3/
 * TYPO3 12 Backend: https://v12.mbox.ddev.site/typo3/
+* TYPO3 13 Backend: https://v13.mbox.ddev.site/typo3/
 * Username: `admin`
 * Password: `Password:joh316` (also in install tool)
 
