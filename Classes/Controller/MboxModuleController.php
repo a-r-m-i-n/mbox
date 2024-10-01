@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3Fluid\Fluid\View\ViewInterface;
 
 class MboxModuleController extends ActionController
 {
@@ -46,37 +45,13 @@ class MboxModuleController extends ActionController
         }
     }
 
-    /**
-     * v12 returns ModuleTemplate, v11 ViewInterface
-     *
-     * @return ModuleTemplate|ViewInterface
-     */
-    private function getViewToUse()
-    {
-        if (method_exists($this->moduleTemplate, 'assign')) {
-            return $this->moduleTemplate;
-        }
-       return $this->view;
-    }
-
-    private function renderViewToUse(): ResponseInterface
-    {
-        if (!$this->getViewToUse() instanceof ModuleTemplate) {
-            // v11
-            $this->moduleTemplate->setContent($this->getViewToUse()->render());
-            return $this->htmlResponse($this->moduleTemplate->renderContent());
-        }
-
-        return $this->htmlResponse($this->getViewToUse()->render());
-    }
-
     public function indexAction(int $currentPage = 1, ?bool $reverse = null): ResponseInterface
     {
-        $this->getViewToUse()->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === MboxTransport::class);
-        $this->getViewToUse()->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
-        $this->getViewToUse()->assign('mboxPath', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
+        $this->moduleTemplate->assign('transportIsMbox', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport'] === MboxTransport::class);
+        $this->moduleTemplate->assign('transport', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport']);
+        $this->moduleTemplate->assign('mboxPath', $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_mbox_file']);
 
-        $this->getViewToUse()->assign('mailbox', $this->mailbox);
+        $this->moduleTemplate->assign('mailbox', $this->mailbox);
 
         // Reverse setting
         /** @var BackendUserAuthentication $beUser */
@@ -86,7 +61,7 @@ class MboxModuleController extends ActionController
         } else {
             $beUser->setSessionData('mbox-index-reverse', $reverse);
         }
-        $this->getViewToUse()->assign('reverse', $reverse);
+        $this->moduleTemplate->assign('reverse', $reverse);
 
         // Get mails as array
         $mails = $this->mailbox->toArray();
@@ -104,10 +79,10 @@ class MboxModuleController extends ActionController
         /** @var SimplePagination $pagination */
         $pagination = GeneralUtility::makeInstance(SimplePagination::class, $paginator);
 
-        $this->getViewToUse()->assign('paginator', $paginator);
-        $this->getViewToUse()->assign('pagination', $pagination);
+        $this->moduleTemplate->assign('paginator', $paginator);
+        $this->moduleTemplate->assign('pagination', $pagination);
 
-        return $this->renderViewToUse();
+        return $this->moduleTemplate->renderResponse('MboxModule/Index');
     }
 
 
@@ -118,9 +93,9 @@ class MboxModuleController extends ActionController
             throw new \InvalidArgumentException('No message with ID "' . $messageId . '" found!');
         }
 
-        $this->getViewToUse()->assign('mail', $mail);
+        $this->moduleTemplate->assign('mail', $mail);
 
-        return $this->renderViewToUse();
+        return $this->moduleTemplate->renderResponse('MboxModule/Show');
     }
 
 
