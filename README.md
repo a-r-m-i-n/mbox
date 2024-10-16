@@ -26,6 +26,7 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 
 - Simple web mail client for emails stored in local mbox file
 - Configurable pagination
+- Possibility to disable the backend module
 - Support for very large mbox files
 - HTML and text viewer
 - Download attachments separately

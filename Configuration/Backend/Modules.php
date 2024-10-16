@@ -1,5 +1,15 @@
 <?php
 
+/** @var array<string, mixed> $extensionConfiguration */
+
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+$extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mbox');
+if ($extensionConfiguration['enableBackendModule'] === '0') {
+    return [];
+}
+
 return [
     'tools_MboxModule' => [
         'parent' => 'tools',
