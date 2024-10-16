@@ -25,8 +25,8 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 ## Features
 
 - Simple web mail client for emails stored in local mbox file
-- Sort mails by date (asc/desc) and store choice in BE-User session
 - Configurable pagination
+- Support for very large mbox files
 - HTML and text viewer
 - Download attachments separately
 - Download whole mail message as EML file (e.g. for Microsoft Outlook)
