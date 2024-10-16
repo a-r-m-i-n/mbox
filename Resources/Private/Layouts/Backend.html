@@ -1,7 +1,10 @@
-<f:render section="toolbar" optional="1" />
+{namespace mbox=T3\Mbox\ViewHelpers}
+<div id="mbox" class="typo3-version-{mbox:typo3MajorVersion()}">
+    <f:render section="toolbar" optional="1" />
 
-<div class="container-fluid my-3">
-    <f:render section="content" />
+    <div class="container-fluid my-3">
+        <f:render section="content" />
+    </div>
+
+    <f:asset.css identifier="ext-mbox-backend-css" href="EXT:mbox/Resources/Public/Css/Backend.css"></f:asset.css>
 </div>
-
-<f:asset.css identifier="ext-mbox-backend-css" href="EXT:mbox/Resources/Public/Css/Backend.css"></f:asset.css>

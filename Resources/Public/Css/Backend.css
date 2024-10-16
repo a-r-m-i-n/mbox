@@ -1,6 +1,14 @@
 body {
-    background: #ededed;
+    background: var(--pagemodule-grid-cell-bg);
     overflow: auto;
+}
+
+.typo3-version-12 {
+    --token-color-neutral-4: whitesmoke;
+    --token-color-neutral-80: #333333;
+    --typo3-surface-bright: light-dark(var(--token-color-neutral-4), var(--token-color-neutral-80));
+    --pagemodule-element-bg: var(--typo3-surface-bright);
+    --pagemodule-element-border-color: color-mix(in srgb, var(--pagemodule-element-bg), currentColor 15%);
 }
 
 .module {
@@ -10,26 +18,29 @@ body {
     padding: 0;
 }
 
-a.sort-reversed,
-a.sort-regular {
-    text-decoration: none;
+.nav.nav-tabs {
+    position: relative;
+    z-index: 5;
 }
-a.sort-reversed:hover span,
-a.sort-regular:hover span {
-    text-decoration: underline;
+.typo3-version-12 .nav.nav-tabs {
+    background: transparent;
 }
-
-a.sort-regular:after,
-a.sort-reversed:after {
-    margin-left: .25rem;
-    font-size: .7rem;
+.nav-link:not(.active) {
+    border-bottom-color: var(--typo3-nav-tabs-border-color) !important;
 }
 
-a.sort-regular:after {
-    content: "▲";
+.typo3-version-12 .nav-link:not(.active) {
+    border-bottom-color: transparent !important;
 }
-a.sort-reversed:after {
-    content: "▼";
+
+.tab-content {
+    position: relative;
+    z-index: 8;
+}
+
+.typo3-version-12 .tab-content {
+    margin-top: -1px;
+    z-index: 0;
 }
 
 .mail-header-info {
@@ -41,27 +52,25 @@ a.sort-reversed:after {
 }
 
 .html-mail, .text-mail {
-    background: #fff;
+    background: var(    --typo3-component-bg) !important;
     min-height: 350px;
     padding: 1rem;
-    border-left: 1px solid #d7d7d7;
-    border-right: 1px solid #d7d7d7;
-    border-bottom: 1px solid #d7d7d7;
+    border: 1px solid var(--pagemodule-element-border-color);
 }
 
 .text-mail {
-    font-family: "Courier New";
+    font-family: "Courier New", monospace;
     white-space: pre;
 }
 
 #mbox-header h1 {
-    color: #333;
+    color: var(--module-color);
 }
 
 #mbox-toolbar {
-    padding: .5rem 1rem;
-    background: #AAA;
-    border-bottom: 1px solid #888;
+    padding: .75rem 1rem;
+    background: var(--pagemodule-element-bg);
+    border-bottom: 1px solid var(--pagemodule-element-border-color);
 }
 
 .attachments {
@@ -97,12 +106,12 @@ a.sort-reversed:after {
     padding: 0;
 }
 .paginator li.current span {
-    background: #ddd;
-    border-color: #888;
+    background: var(--pagemodule-element-bg);
+    border-color: var(--pagemodule-element-border-color);
     font-weight: bold;
 }
 .paginator li a, .paginator li span {
-    border: 1px solid #aaa;
+    border: 1px solid var(--pagemodule-element-border-color);
     padding: .5rem 1rem;
     margin: 0 .1rem .2rem;
     display: block;
@@ -110,7 +119,6 @@ a.sort-reversed:after {
     text-align: center;
 }
 .paginator li a:hover {
-    border-color: #333333;
     text-decoration: none;
 }
 

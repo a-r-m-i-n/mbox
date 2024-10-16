@@ -37,7 +37,7 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 
 ## Requirements
 
-- TYPO3 12.4 LTS or 13.x
+- TYPO3 12.4 LTS or 13.4 LTS
 - PHP >=8.2
 
 
