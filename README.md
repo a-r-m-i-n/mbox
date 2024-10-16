@@ -40,6 +40,8 @@ This extension has been supported by [**Institut der deutschen Wirtschaft Köln 
 - TYPO3 12.4 LTS or 13.4 LTS
 - PHP >=8.2
 
+Notice: For TYPO3 11.5 LTS support checkout version 2.1.
+
 
 ## Installation
 
@@ -86,7 +88,7 @@ The command got the name ``mbox:testmails:send`` and will send four test mails (
 
 ## Dev Environment
 
-The extension repository provides a DDEV environment to develop on EXT:mbox locally in TYPO3 11 and 12. 
+The extension repository provides a DDEV environment to develop on EXT:mbox locally in TYPO3 12 and 13. 
 You find more information [here](https://github.com/a-r-m-i-n/ddev-for-typo3-extensions).
 
 ### Minimum instructions
