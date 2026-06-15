@@ -11,8 +11,11 @@ xdebug_enabled: false
 additional_hostnames:
     - v12.mbox
     - v13.mbox
+    - v14.mbox
 additional_fqdns: []
 database:
     type: mariadb
     version: "10.4"
+# Mutagen has no project mount to optimize here (no_project_mount: true), so disable it.
+performance_mode: none
 use_dns_when_possible: true
