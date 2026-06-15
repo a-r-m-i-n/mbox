@@ -14,6 +14,7 @@ return static function (ContainerConfigurator $container, ContainerBuilder $cont
 
     if ($extensionConfiguration['debugMode'] ?? false) {
         $container->services()->set(CreateAndSendTestMailsCommand::class)
+            ->autowire()
             ->tag('console.command', [
                 'command' => 'mbox:testmails:send',
                 'schedulable' => false,

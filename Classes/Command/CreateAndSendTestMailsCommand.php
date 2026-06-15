@@ -9,11 +9,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CreateAndSendTestMailsCommand extends Command
 {
+    public function __construct(
+        private readonly MailerInterface $mailer,
+    ) {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this->addOption('loops', 'l', InputOption::VALUE_OPTIONAL, 'Amount of loops', 1);
@@ -43,8 +50,8 @@ class CreateAndSendTestMailsCommand extends Command
                 ->subject('Test Mail #' . ++$mailNo)
                 ->text('This is the text body of the mail')
                 ->html('This is the <strong>HTML body</strong> of the mail')
-                ->send()
             ;
+            $this->mailer->send($simpleMail);
             $io->progressAdvance();
 
 
@@ -58,9 +65,8 @@ class CreateAndSendTestMailsCommand extends Command
                 ->html('This is the <strong>HTML body</strong> of the mail, whcih also contains an attachment')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Resources/Public/Icons/Extension.svg'), 'Extension.svg', 'text/svg')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/README.md'), 'README.md', 'text/markdown')
-                ->send()
             ;
-
+            $this->mailer->send($mailWithAttachment);
             $io->progressAdvance();
 
 
@@ -74,8 +80,8 @@ class CreateAndSendTestMailsCommand extends Command
                 ->subject('Test Mail #' . ++$mailNo)
                 ->text('This is the text body of the mail')
                 ->html('This is the <strong>HTML body</strong> of the mail')
-                ->send()
             ;
+            $this->mailer->send($simpleMail);
             $io->progressAdvance();
 
 
@@ -88,8 +94,8 @@ class CreateAndSendTestMailsCommand extends Command
                 ->replyTo('replyTo@domain.com')
                 ->subject('Test Mail #' .  ++$mailNo . ' (Plaintext only)')
                 ->text('This is the text body of the mail')
-                ->send()
             ;
+            $this->mailer->send($simpleMailPlainTextOnly);
             $io->progressAdvance();
 
 
@@ -102,8 +108,8 @@ class CreateAndSendTestMailsCommand extends Command
                 ->replyTo('replyTo@domain.com')
                 ->subject('Test Mail #' . ++$mailNo . ' (HTML only)')
                 ->html('This is the <strong>HTML body</strong> of the mail')
-                ->send()
             ;
+            $this->mailer->send($simpleMailHtmlOnly);
             $io->progressAdvance();
 
 
@@ -118,9 +124,8 @@ class CreateAndSendTestMailsCommand extends Command
                 ->html('This is the <strong>HTML body</strong> of the mail, which also contains an binary attachment and an inline image: <img src="cid:inline-test-image" alt="Inline Image" />')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-detail-html-view.png'), 'mbox-detail-html-view.png', 'image/png')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-detail-with-attachments.png'), 'mbox-detail-with-attachments.png', 'image/png')
-                ->send()
             ;
-
+            $this->mailer->send($mailWithBinaryAttachment);
             $io->progressAdvance();
         }
 
