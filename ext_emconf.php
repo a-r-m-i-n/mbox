@@ -7,12 +7,12 @@ $EM_CONF[$_EXTKEY] = array(
     'author' => 'Armin Vieweg',
     'author_email' => 'armin@v.ieweg.de',
     'author_company' => 'IW Medien GmbH | www.iwmedien.de',
-    'version' => '3.0.2',
+    'version' => '4.0.0',
     'state' => 'stable',
     'constraints' => [
         'depends' =>
             [
-                'typo3' => '12.4.0-13.4.99',
+                'typo3' => '13.4.0-14.3.99',
             ],
         'conflicts' => [],
         'suggests' => [],
