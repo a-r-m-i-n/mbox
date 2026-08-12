@@ -9,8 +9,8 @@ router_http_port: "80"
 router_https_port: "443"
 xdebug_enabled: false
 additional_hostnames:
-    - v12.mbox
     - v13.mbox
+    - v14.mbox
 additional_fqdns: []
 database:
     type: mariadb

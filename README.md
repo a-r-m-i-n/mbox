@@ -99,8 +99,8 @@ ddev install-all
 ```
 
 * Overview: https://mbox.ddev.site/
-* TYPO3 12 Backend: https://v12.mbox.ddev.site/typo3/
 * TYPO3 13 Backend: https://v13.mbox.ddev.site/typo3/
+* TYPO3 14 Backend: https://v14.mbox.ddev.site/typo3/
 * Username: `admin`
 * Password: `Password:joh316` (also in install tool)
 
