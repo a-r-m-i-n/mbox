@@ -5,4 +5,8 @@ return [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:mbox/Resources/Public/Icons/Extension.svg',
     ],
+    'mbox-module-icon' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:mbox/Resources/Public/Icons/module-mbox.svg',
+    ],
 ];
