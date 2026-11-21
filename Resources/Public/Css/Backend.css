@@ -3,14 +3,6 @@ body {
     overflow: auto;
 }
 
-.typo3-version-12 {
-    --token-color-neutral-4: whitesmoke;
-    --token-color-neutral-80: #333333;
-    --typo3-surface-bright: light-dark(var(--token-color-neutral-4), var(--token-color-neutral-80));
-    --pagemodule-element-bg: var(--typo3-surface-bright);
-    --pagemodule-element-border-color: color-mix(in srgb, var(--pagemodule-element-bg), currentColor 15%);
-}
-
 .module {
     background: transparent;
 }
@@ -22,25 +14,13 @@ body {
     position: relative;
     z-index: 5;
 }
-.typo3-version-12 .nav.nav-tabs {
-    background: transparent;
-}
 .nav-link:not(.active) {
     border-bottom-color: var(--typo3-nav-tabs-border-color) !important;
-}
-
-.typo3-version-12 .nav-link:not(.active) {
-    border-bottom-color: transparent !important;
 }
 
 .tab-content {
     position: relative;
     z-index: 8;
-}
-
-.typo3-version-12 .tab-content {
-    margin-top: -1px;
-    z-index: 0;
 }
 
 .mail-header-info {

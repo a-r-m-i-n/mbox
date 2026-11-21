@@ -33,10 +33,10 @@ TYPO3 CMS backend module to view mbox file contents, like an email client.
 
 ## Requirements
 
-- TYPO3 12.4 LTS, 13.4 LTS or 14.3 LTS
+- TYPO3 13.4 LTS or 14.3 LTS
 - PHP >=8.2
 
-Notice: For TYPO3 11.5 LTS support checkout version 2.1.
+For TYPO3 12.4 LTS, use EXT:mbox 3.1.0. For TYPO3 11.5 LTS, use version 2.1.
 
 
 ## Installation
@@ -95,7 +95,7 @@ The command `mbox:testmails:send` sends six test mails (with and without attachm
 
 ## Dev Environment
 
-The extension repository provides a DDEV environment with PHP 8.4 for TYPO3 12.4, 13.4, and 14.3.
+The extension repository provides a DDEV environment with PHP 8.4 for TYPO3 13.4 and 14.3.
 You find more information [here](https://github.com/a-r-m-i-n/ddev-for-typo3-extensions).
 
 ### Minimum instructions
@@ -105,12 +105,12 @@ ddev start
 ddev install-all
 ```
 
-To install only TYPO3 14.3, run `ddev install-v14` instead of `ddev install-all`.
-If upgrading an existing local environment, `ddev delete -Oy` removes all local
-TYPO3 installations and their data before you start again.
+To install only one version, run `ddev install-v13` or `ddev install-v14` instead of `ddev install-all`.
+If you already have a local environment, run `ddev restart` to apply the new
+configuration. This preserves the v13 and v14 installations.
+For a clean start, `ddev delete -Oy` removes the configured local installations and their data.
 
 * Overview: https://mbox.ddev.site/
-* TYPO3 12 Backend: https://v12.mbox.ddev.site/typo3/
 * TYPO3 13 Backend: https://v13.mbox.ddev.site/typo3/
 * TYPO3 14 Backend: https://v14.mbox.ddev.site/typo3/
 * Username: `admin`

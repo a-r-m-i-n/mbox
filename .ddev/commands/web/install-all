@@ -4,6 +4,5 @@ set -e
 
 COMMAND_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-bash "$COMMAND_DIR/install-v12"
 bash "$COMMAND_DIR/install-v13"
 bash "$COMMAND_DIR/install-v14"
