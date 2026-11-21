@@ -51,6 +51,17 @@ For Composer, you can use:
 composer require t3/mbox
 ```
 
+If you are upgrading an existing Composer installation, update the extension
+and its parser dependency together. The extension now requires
+[`armin/mbox-parser`](https://packagist.org/packages/armin/mbox-parser) 2.1 or later
+within the 2.x series.
+
+```bash
+composer update t3/mbox armin/mbox-parser --with-all-dependencies
+```
+
+For TER release builds, see [the bundled dependency instructions](Resources/Private/PHP/README.md).
+
 ## Configuration
 
 To make EXT:mbox work you need to configure the TYPO3 mail configuration to use mbox, like this:

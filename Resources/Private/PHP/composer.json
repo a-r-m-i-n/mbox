@@ -1,10 +1,10 @@
 {
     "config": {
         "platform": {
-            "php": "7.3.0"
+            "php": "8.2.0"
         }
     },
     "require": {
-        "armin/mbox-parser": "^2.0.0"
+        "armin/mbox-parser": "^2.1"
     }
 }
