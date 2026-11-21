@@ -1,0 +1,44 @@
+#!/bin/bash
+#ddev-silent-no-warn
+
+set -euo pipefail
+
+VERSION=v14
+cd "/var/www/html/$VERSION"
+
+if [[ -e composer.json ]]; then
+    echo "TYPO3 $VERSION has already been initialized. Use a fresh DDEV environment to reinstall it." >&2
+    exit 1
+fi
+
+echo '{}' > composer.json
+composer config extra.typo3/cms.web-dir public
+composer config "repositories.$EXTENSION_KEY" path "../../$EXTENSION_KEY"
+composer config --no-plugins allow-plugins.typo3/cms-composer-installers true
+composer config --no-plugins allow-plugins.typo3/class-alias-loader true
+composer require typo3/minimal:'^14.3' \
+    typo3/cms-impexp:'^14.3' \
+    typo3/cms-install:'^14.3' \
+    typo3/theme-camino:'^14.3' \
+    helhum/typo3-console:'^9.0' \
+    "$PACKAGE_NAME:*@dev" \
+    --no-progress --no-interaction
+
+mysql -h "$TYPO3_DB_HOST" -u "$TYPO3_DB_USERNAME" -p"$TYPO3_DB_PASSWORD" -e "CREATE DATABASE $VERSION;"
+
+vendor/bin/typo3 setup --no-interaction --dbname="$VERSION" \
+    --password="$TYPO3_DB_PASSWORD" --admin-user-password="$TYPO3_SETUP_ADMIN_PASSWORD"
+
+vendor/bin/typo3 configuration:set 'BE/debug' true --json
+vendor/bin/typo3 configuration:set 'FE/debug' true --json
+vendor/bin/typo3 configuration:set 'SYS/displayErrors' 1 --json
+vendor/bin/typo3 configuration:set 'SYS/trustedHostsPattern' 'v14\.mbox\.ddev\.site'
+vendor/bin/typo3 configuration:set 'MAIL/transport' 'T3\Mbox\MboxTransport'
+vendor/bin/typo3 configuration:set 'MAIL/transport_mbox_file' "$PWD/mails.mbox"
+vendor/bin/typo3 configuration:set 'MAIL/defaultMailFromAddress' "$TYPO3_SETUP_ADMIN_EMAIL"
+touch mails.mbox
+
+sed -i 's#^base: /camino/$#base: /#' config/sites/camino/config.yaml
+rm -f public/index.html
+
+vendor/bin/typo3 cache:flush

@@ -61,6 +61,7 @@ body {
 .text-mail {
     font-family: "Courier New", monospace;
     white-space: pre;
+    overflow-x: auto;
 }
 
 #mbox-header h1 {
@@ -100,11 +101,6 @@ body {
     text-decoration: none;
 }
 
-.paginator {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
 .paginator li.current span {
     background: var(--pagemodule-element-bg);
     border-color: var(--pagemodule-element-border-color);

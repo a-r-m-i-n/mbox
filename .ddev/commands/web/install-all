@@ -1,6 +1,9 @@
 #!/bin/bash
 
-ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}/.")"
+set -e
 
-$ABSOLUTE_PATH/install-v12
-$ABSOLUTE_PATH/install-v13
+COMMAND_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+bash "$COMMAND_DIR/install-v12"
+bash "$COMMAND_DIR/install-v13"
+bash "$COMMAND_DIR/install-v14"

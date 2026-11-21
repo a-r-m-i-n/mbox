@@ -60,7 +60,7 @@
                         <td>
                             <f:link.action action="show" arguments="{messageId: mail.messageId}" class="text-primary"><strong>{mail.subject}</strong></f:link.action>
                         </td>
-                        <td>{mail.date -> f:format.date(format: 'd.m.Y H:i:s')}</td>
+                        <td class="text-nowrap">{mail.date -> f:format.date(format: 'd.m.Y H:i:s')}</td>
                         <td class="text-nowrap">{mail.size -> f:format.bytes()}</td>
                         <td>
                             <f:if condition="{mail.attachments -> f:count()} > 0">

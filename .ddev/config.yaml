@@ -2,7 +2,7 @@ name: mbox
 type: php
 docroot: ""
 no_project_mount: true
-php_version: "8.2"
+php_version: "8.4"
 composer_version: "2"
 webserver_type: apache-fpm
 router_http_port: "80"
@@ -11,6 +11,7 @@ xdebug_enabled: false
 additional_hostnames:
     - v12.mbox
     - v13.mbox
+    - v14.mbox
 additional_fqdns: []
 database:
     type: mariadb

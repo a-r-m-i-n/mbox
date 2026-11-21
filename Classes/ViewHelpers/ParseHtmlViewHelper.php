@@ -3,7 +3,6 @@
 namespace T3\Mbox\ViewHelpers;
 
 use Armin\MboxParser\MailMessage;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class ParseHtmlViewHelper extends AbstractViewHelper
@@ -11,26 +10,24 @@ class ParseHtmlViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
     protected $escapeChildren = false;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('mail', 'object', 'The mail message instance', true);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): string {
-        if (empty($arguments['mail']) || !$arguments['mail'] instanceof MailMessage) {
+    public function render(): string
+    {
+        $mail = $this->arguments['mail'];
+        if (!$mail instanceof MailMessage) {
             throw new \InvalidArgumentException(
                 'ParseHtmlViewHelper of EXT:mbox requires argument "mail" to be an instance of MailMessage!'
             );
         }
 
-        $html = $renderChildrenClosure();
-        $attachments = $arguments['mail']->getAttachments();
+        $html = $this->renderChildren();
+        $attachments = $mail->getAttachments();
 
-        // Find all inline images in HTMLL
+        // Find all inline images in HTML
         preg_match_all('/[\'"]cid:(.*?)[\'"]/', $html, $matches);
         foreach ($matches[1] as $contentId) {
             foreach ($attachments as $attachment) {

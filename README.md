@@ -33,7 +33,7 @@ TYPO3 CMS backend module to view mbox file contents, like an email client.
 
 ## Requirements
 
-- TYPO3 12.4 LTS or 13.4 LTS
+- TYPO3 12.4 LTS, 13.4 LTS or 14.3 LTS
 - PHP >=8.2
 
 Notice: For TYPO3 11.5 LTS support checkout version 2.1.
@@ -91,11 +91,11 @@ when you enable the debug mode in Extension configuration.
 
 Don't forget to clear all caches from install tool, after enabling the debug mode.
 
-The command got the name ``mbox:testmails:send`` and will send four test mails (with/without attachments).
+The command `mbox:testmails:send` sends six test mails (with and without attachments).
 
 ## Dev Environment
 
-The extension repository provides a DDEV environment to develop on EXT:mbox locally in TYPO3 12 and 13. 
+The extension repository provides a DDEV environment with PHP 8.4 for TYPO3 12.4, 13.4, and 14.3.
 You find more information [here](https://github.com/a-r-m-i-n/ddev-for-typo3-extensions).
 
 ### Minimum instructions
@@ -105,9 +105,14 @@ ddev start
 ddev install-all
 ```
 
+To install only TYPO3 14.3, run `ddev install-v14` instead of `ddev install-all`.
+If upgrading an existing local environment, `ddev delete -Oy` removes all local
+TYPO3 installations and their data before you start again.
+
 * Overview: https://mbox.ddev.site/
 * TYPO3 12 Backend: https://v12.mbox.ddev.site/typo3/
 * TYPO3 13 Backend: https://v13.mbox.ddev.site/typo3/
+* TYPO3 14 Backend: https://v14.mbox.ddev.site/typo3/
 * Username: `admin`
 * Password: `Password:joh316` (also in install tool)
 

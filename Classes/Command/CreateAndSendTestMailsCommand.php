@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CreateAndSendTestMailsCommand extends Command
@@ -31,9 +31,10 @@ class CreateAndSendTestMailsCommand extends Command
         }
 
         $io->progressStart(6 * $loops);
+        $mailer = GeneralUtility::makeInstance(MailerInterface::class);
         $mailNo = 0;
         for ($loop = 0; $loop < $loops; $loop++) {
-            $simpleMail = GeneralUtility::makeInstance(MailMessage::class);
+            $simpleMail = new Email();
             $simpleMail
                 ->from('sender@domain.com')
                 ->to('recipient1@domain.com', 'recipient2@domain.com')
@@ -43,12 +44,12 @@ class CreateAndSendTestMailsCommand extends Command
                 ->subject('Test Mail #' . ++$mailNo)
                 ->text('This is the text body of the mail')
                 ->html('This is the <strong>HTML body</strong> of the mail')
-                ->send()
             ;
+            $mailer->send($simpleMail);
             $io->progressAdvance();
 
 
-            $mailWithAttachment = GeneralUtility::makeInstance(MailMessage::class);
+            $mailWithAttachment = new Email();
             $mailWithAttachment
                 ->priority(Email::PRIORITY_HIGHEST)
                 ->from('sender@domain.com')
@@ -58,13 +59,13 @@ class CreateAndSendTestMailsCommand extends Command
                 ->html('This is the <strong>HTML body</strong> of the mail, whcih also contains an attachment')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Resources/Public/Icons/Extension.svg'), 'Extension.svg', 'text/svg')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/README.md'), 'README.md', 'text/markdown')
-                ->send()
             ;
+            $mailer->send($mailWithAttachment);
 
             $io->progressAdvance();
 
 
-            $simpleMail = GeneralUtility::makeInstance(MailMessage::class);
+            $simpleMail = new Email();
             $simpleMail
                 ->from('sender@domain.com')
                 ->to(new Address('recipient@domain.com', 'Robert Recipient'), 'recipient1@domain.com', 'recipient2@domain.com')
@@ -74,12 +75,12 @@ class CreateAndSendTestMailsCommand extends Command
                 ->subject('Test Mail #' . ++$mailNo)
                 ->text('This is the text body of the mail')
                 ->html('This is the <strong>HTML body</strong> of the mail')
-                ->send()
             ;
+            $mailer->send($simpleMail);
             $io->progressAdvance();
 
 
-            $simpleMailPlainTextOnly = GeneralUtility::makeInstance(MailMessage::class);
+            $simpleMailPlainTextOnly = new Email();
             $simpleMailPlainTextOnly
                 ->from('sender@domain.com')
                 ->to(new Address('recipient@domain.com', 'Robert Recipient'), 'recipient1@domain.com', 'recipient2@domain.com')
@@ -88,12 +89,12 @@ class CreateAndSendTestMailsCommand extends Command
                 ->replyTo('replyTo@domain.com')
                 ->subject('Test Mail #' .  ++$mailNo . ' (Plaintext only)')
                 ->text('This is the text body of the mail')
-                ->send()
             ;
+            $mailer->send($simpleMailPlainTextOnly);
             $io->progressAdvance();
 
 
-            $simpleMailHtmlOnly = GeneralUtility::makeInstance(MailMessage::class);
+            $simpleMailHtmlOnly = new Email();
             $simpleMailHtmlOnly
                 ->from('sender@domain.com')
                 ->to(new Address('recipient@domain.com', 'Robert Recipient'), 'recipient1@domain.com', 'recipient2@domain.com')
@@ -102,12 +103,12 @@ class CreateAndSendTestMailsCommand extends Command
                 ->replyTo('replyTo@domain.com')
                 ->subject('Test Mail #' . ++$mailNo . ' (HTML only)')
                 ->html('This is the <strong>HTML body</strong> of the mail')
-                ->send()
             ;
+            $mailer->send($simpleMailHtmlOnly);
             $io->progressAdvance();
 
 
-            $mailWithBinaryAttachment = GeneralUtility::makeInstance(MailMessage::class);
+            $mailWithBinaryAttachment = new Email();
             $mailWithBinaryAttachment
                 ->priority(Email::PRIORITY_HIGHEST)
                 ->from('sender@domain.com')
@@ -118,8 +119,8 @@ class CreateAndSendTestMailsCommand extends Command
                 ->html('This is the <strong>HTML body</strong> of the mail, which also contains an binary attachment and an inline image: <img src="cid:inline-test-image" alt="Inline Image" />')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-detail-html-view.png'), 'mbox-detail-html-view.png', 'image/png')
                 ->attachFromPath(GeneralUtility::getFileAbsFileName('EXT:mbox/Documentation/Screenshots/mbox-detail-with-attachments.png'), 'mbox-detail-with-attachments.png', 'image/png')
-                ->send()
             ;
+            $mailer->send($mailWithBinaryAttachment);
 
             $io->progressAdvance();
         }
