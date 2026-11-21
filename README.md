@@ -2,10 +2,6 @@
 
 TYPO3 CMS backend module to view mbox file contents, like an email client.
 
-This extension has been supported by [**Institut der deutschen Wirtschaft Köln Medien GmbH**](https://www.iwmedien.de/)
-
-![IW Medien](Documentation/Logos/IwMedienLogo.png)
-
 
 ## Screenshots
 
@@ -111,5 +107,4 @@ ddev install-all
 - [EXT:mbox in TER](https://extensions.typo3.org/extension/mbox)
 - [EXT:mbox on Packagist](https://packagist.org/packages/t3/mbox)
 - [The author](https://v.ieweg.de)
-- [The sponsor](https://www.iwmedien.de)
 - [**Donate**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2DCCULSKFRZFU)

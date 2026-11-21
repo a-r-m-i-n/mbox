@@ -6,7 +6,6 @@ $EM_CONF[$_EXTKEY] = array(
     'category' => 'backend',
     'author' => 'Armin Vieweg',
     'author_email' => 'armin@v.ieweg.de',
-    'author_company' => 'IW Medien GmbH | www.iwmedien.de',
     'version' => '3.0.2',
     'state' => 'stable',
     'constraints' => [
